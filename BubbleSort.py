@@ -18,3 +18,19 @@ def bubbleSort(userList):
 
 list1 = [0, 4, 3, 2, 1]
 print(bubbleSort(list1))
+
+
+####
+
+array1 = [54,26,93,17,77,31,44,55,20]
+
+def bubbleSort2(arr):
+    print(len(arr)-1)
+    for x in range(len(arr)-1, 0, -1):
+
+        for y in range(x):
+            if arr[y] > arr[y+1]:
+                temp = arr[y]
+                arr[y], arr[y+1] = arr[y+1], temp
+
+print(bubbleSort2(array1))
