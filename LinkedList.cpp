@@ -18,6 +18,16 @@ void insertInfrontOfHead(Node*& head, int data) {
 }
 
 
+int countNodes(Node*& head) {
+    int count = 0;
+    Node* cursor = head;
+    while (cursor != nullptr) {
+        count++;
+        cursor = cursor->next;
+    }
+    return count;
+}
+
 int main()
 {
     Node* listHead = nullptr;
@@ -25,13 +35,15 @@ int main()
     insertInfrontOfHead(listHead, 20);
     insertInfrontOfHead(listHead, 30);
     Node* cursor = listHead;
+    
     while (cursor != nullptr) {
         std::cout << cursor->data << "-->";
         cursor = cursor->next;
     }
-        std::cout << "nullptr";
-        
-        
+        std::cout << "nullptr" << std::endl;
+    
+    std::cout << "Number of nodes: " << countNodes(listHead) << std::endl;
+    
     // Don't forget to free the memory allocated for the node
     while (listHead != nullptr) {
         Node* temp = listHead;
