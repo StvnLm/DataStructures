@@ -1,27 +1,43 @@
 #include <iostream>
+
 using namespace std;
 
-struct Node
-{
-    int data;
-    Node *next;
+struct Node {
+    int data; 
+    Node* next;
+    
+    Node(int val) : data(val), next(nullptr) {}
 };
 
-void insertAtTheFront(Node*& head, int data) {
-    // 1. Prepare new Node
-    Node * newNode = new Node;
-    newNode->data = data;
-    // Put it infront of current head
-    newNode->next = head; 
-    // Move head PTR to point to the newNode
-    head = newNode;
+
+void insertInfrontOfHead(Node*& head, int data) {
+    Node* tmp;
+    tmp = new Node(data);
+    tmp->next = head;
+    head = tmp;
 }
 
-int main() {
-    Node* head = nullptr;
-    insertAtTheFront(head, 20);
-    cout << head->data << endl;
-    insertAtTheFront(head, 30);
-    cout << head->data << endl;
-}
 
+int main()
+{
+    Node* listHead = nullptr;
+    insertInfrontOfHead(listHead, 10);
+    insertInfrontOfHead(listHead, 20);
+    insertInfrontOfHead(listHead, 30);
+    Node* cursor = listHead;
+    while (cursor != nullptr) {
+        std::cout << cursor->data << "-->";
+        cursor = cursor->next;
+    }
+        std::cout << "nullptr";
+        
+        
+    // Don't forget to free the memory allocated for the node
+    while (listHead != nullptr) {
+        Node* temp = listHead;
+        listHead = listHead->next;
+        delete temp;
+    }
+        
+    return 0;
+}
