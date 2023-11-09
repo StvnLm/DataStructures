@@ -1,63 +1,67 @@
 #include <iostream>
+// TODO : Check index out of bounds, or if initial list is empty.
 
 using namespace std;
 typedef struct Node {
     int data;
     Node* next;
     Node* prev;
+    Node(int d) : data(d), next(nullptr), prev(nullptr) {};
 }* nodePtr;
 
 
+void insertNodeInFront(Node*& head, int data) {
+    nodePtr tempNode = new Node(data);
+    tempNode->prev = head;
+    head->next = tempNode;
+    head = tempNode;
+}
+
+void insertNodeAfterIndex(Node*& tail, int data, int index) {
+    nodePtr indexNode;
+    indexNode = tail;
+    for (int i = 0; i < index; i++) {
+        indexNode = indexNode->next;
+    }
+
+    nodePtr insertNode = new Node(data);
+    insertNode->next = indexNode->next;
+    insertNode->prev = indexNode;
+    indexNode->next->prev = insertNode;
+    indexNode->next = insertNode;
+}
+
 void printForward(Node*& head) {
     nodePtr current = head;
-    std::cout << "nullptr -> ";
+    
+    if (current->prev == nullptr){
+        std::cout << "nullptr -> ";
+    }
+    
     while (current != nullptr) {
         std::cout << current->data << " -> ";
         current = current->next;
     }
-    std::cout << "nullptr" << std::endl;
+
+    if (current == nullptr){
+        std::cout << "nullptr" << std::endl;
+    }
 }
 
 
-void printBackward(Node*& tail) {
-
-}
 
 int main()
 {
-    
-    nodePtr node;
-    nodePtr head;
+    nodePtr head = new Node(1);
     nodePtr tail;
-    node = new Node;
+    tail = head;
     
-    node->data = 4;
-    node->next = nullptr;
-    node->prev = nullptr;
+    insertNodeInFront(head, 2);
+    insertNodeInFront(head, 3);
+    insertNodeInFront(head, 4);
+    insertNodeInFront(head, 6);
     
-    head = node;
-    tail = node;
-    
-    node = new Node;
-    node->data = 5;
-    node->next = nullptr;
-    node->prev = tail;
-    tail->next = node;
-    tail = node;
-
-    node = new Node;
-    node->data = 6;
-    node->next = nullptr;
-    node->prev = tail;
-    tail->next = node;
-    tail = node;
-
-    node = new Node;
-    node->data = 7;
-    node->next = nullptr;
-    node->prev = tail;
-    tail->next = node;
-    tail = node;
-    
-    printForward(head);
+    printForward(tail);
+    insertNodeAfterIndex(tail, 5, 3);
+    printForward(tail);
 }
